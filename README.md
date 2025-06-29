@@ -53,6 +53,44 @@ echo 'export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"' >
 
 > These variables will be used by default when running `fence` without command-line arguments
 
+## 🧩 GitHub Action
+
+You can also use FENCE with GitHub Actions to automatically check pull requests in your repository.
+
+### ✅ Basic usage
+
+Add the following workflow to `.github/workflows/fence.yml` in your repository:
+
+```yaml
+name: FENCE
+
+on:
+  pull_request:
+
+jobs:
+  check-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run FENCE
+        uses: nascjoao/fence@v0
+```
+
+### ⚙️ Customizing the action
+
+You can customize the action by specifying the base branch, limit, and custom messages:
+
+```yaml
+      - name: Run FENCE with custom messages
+        uses: nascjoao/fence@v0
+        with:
+          base_branch: develop
+          limit: 100
+          success_msg: "✅ Within limit: {total} modified lines."
+          fail_msg: "❌ Too many changes! Limit is {limit}, but found {total}."
+```
+
 ## 🔄 Uninstalling
 
 ```bash
