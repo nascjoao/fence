@@ -1,0 +1,33 @@
+name: 'FENCE CLI Action'
+description: 'Prevents large pull requests by checking line diffs'
+author: 'João Nascimento'
+
+inputs:
+  base_branch:
+    description: 'Branch to compare against'
+    required: false
+    default: 'main'
+
+  limit:
+    description: 'Line limit'
+    required: false
+    default: '250'
+
+  success_msg:
+    description: 'Success message'
+    required: false
+    default: '✅ Nice work! {total} modified lines within limit {limit}.'
+
+  fail_msg:
+    description: 'Failure message'
+    required: false
+    default: '❌ Too many changes: {total} modified lines, limit is {limit}.'
+
+runs:
+  using: 'docker'
+  image: './.github/actions/fence/Dockerfile'
+  entrypoint: '/entrypoint.sh'
+
+branding:
+  icon: 'check-circle'
+  color: 'yellow'

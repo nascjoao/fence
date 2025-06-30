@@ -1,0 +1,16 @@
+name: FENCE
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  fence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run FENCE on PR
+        uses: ./
+        with:
+          base_branch: ${{ github.base_ref }}
