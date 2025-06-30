@@ -32,16 +32,41 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     *)
-      echo "Unknown option: $1"
+      echo "Unknown option: $1" >&2
       exit 1
       ;;
   esac
 done
 
-git fetch origin "$BASE_BRANCH":"$BASE_BRANCH" || true
+if git show-ref --verify --quiet "refs/heads/$BASE_BRANCH"; then
+  DIFF_BASE=$BASE_BRANCH
+else
+  echo "🔄 Local branch '$BASE_BRANCH' not found. Attempting fetch from origin..." >&2
 
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-TOTAL=$(git diff "$BASE_BRANCH" --shortstat -- . ':(exclude)*lock*' | awk '{print $4 + $6}')
+  if git remote get-url origin >/dev/null 2>&1; then
+
+    if git fetch origin "$BASE_BRANCH:$BASE_BRANCH" >/dev/null 2>&1; then
+      DIFF_BASE=$BASE_BRANCH
+    else
+      if git fetch origin >/dev/null 2>&1; then
+        if git show-ref --verify --quiet "refs/remotes/origin/$BASE_BRANCH"; then
+          DIFF_BASE="origin/$BASE_BRANCH"
+        else
+          echo "❌ Branch '$BASE_BRANCH' not found in remote 'origin'." >&2
+          exit 1
+        fi
+      else
+        echo "❌ Failed to fetch from remote 'origin'." >&2
+        exit 1
+      fi
+    fi
+  else
+    echo "❌ No remote 'origin' and local branch '$BASE_BRANCH' does not exist." >&2
+    exit 1
+  fi
+fi
+
+TOTAL=$(git diff "$DIFF_BASE" --shortstat -- . ':(exclude)*lock*' | awk '{print $4 + $6}')
 [ -z "$TOTAL" ] && TOTAL=0
 
 if [ "$TOTAL" -gt "$LIMIT" ]; then
