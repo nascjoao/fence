@@ -1,6 +1,22 @@
 # 🚧 FENCE — FENCE Ensures Nothing Crosses Edges
 FENCE is a command-line tool that helps you ensure that your code changes do not exceed a specified line limit when compared to a base branch. It is particularly useful for maintaining code quality and preventing large, unwieldy pull requests.
 
+## Index
+- [▶️ Quick Demonstration](#-quick-demonstration)
+- [📦 Installation](#-installation)
+- [🚀 Usage](#-usage)
+  - [Examples:](#examples)
+  - [Customizing Messages](#customizing-messages)
+- [⚙️ Persisting Configuration](#-persisting-configuration)
+- [🧩 GitHub Action](#-github-action)
+  - [✅ Basic usage](#-basic-usage)
+  - [⚙️ Customizing the action](#-customizing-the-action)
+- [🔄 Uninstalling](#-uninstalling)
+- [📄 License](#-license)
+
+## ▶️ Quick Demonstration
+https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d
+
 ## 📦 Installation
 > macOS e Linux
 
@@ -25,7 +41,9 @@ fence develop -l 100      # Compares with `develop` branch with a limit of 100 l
 > FYI: FENCE ignores lock files, such as `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
 
 ### Customizing Messages
-
+**## Quick Demonstration
+https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d
+**
 ```bash
 fence \
   -s "✅ Alright! Just {total} lines, limit is {limit}" \
