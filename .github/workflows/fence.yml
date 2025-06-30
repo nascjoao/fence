@@ -14,3 +14,4 @@ jobs:
         uses: ./
         with:
           base_branch: ${{ github.base_ref }}
+          limit: 108
