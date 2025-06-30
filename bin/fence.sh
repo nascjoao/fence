@@ -38,7 +38,6 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-git branch -a
 git fetch origin "$BASE_BRANCH":"$BASE_BRANCH" || true
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
