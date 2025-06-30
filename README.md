@@ -41,8 +41,7 @@ fence develop -l 100      # Compares with `develop` branch with a limit of 100 l
 > FYI: FENCE ignores lock files, such as `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
 
 ### Customizing Messages
-**## Quick Demonstration
-https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d
+
 **
 ```bash
 fence \
