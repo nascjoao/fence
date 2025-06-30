@@ -1,6 +1,19 @@
 # 🚧 FENCE — FENCE Ensures Nothing Crosses Edges
 FENCE is a command-line tool that helps you ensure that your code changes do not exceed a specified line limit when compared to a base branch. It is particularly useful for maintaining code quality and preventing large, unwieldy pull requests.
 
+## Index
+- [📦 Installation](#-installation)
+- [🚀 Usage](#-usage)
+  - [Examples:](#examples)
+  - [Customizing Messages](#customizing-messages)
+- [⚙️ Persisting Configuration](#-persisting-configuration)
+- [🧩 GitHub Action](#-github-action)
+  - [✅ Basic usage](#-basic-usage)
+  - [⚙️ Customizing the action](#-customizing-the-action)
+- [🔄 Uninstalling](#-uninstalling)
+- [📄 License](#-license)
+  
+
 ## 📦 Installation
 > macOS e Linux
 
