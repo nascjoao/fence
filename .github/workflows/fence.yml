@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: List branches
-        run: git branch -a
       - name: Run FENCE on PR
         uses: ./
         with:
