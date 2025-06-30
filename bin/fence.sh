@@ -1,5 +1,12 @@
 #!/bin/sh
 
+mkdir -p /tmp
+cat <<EOF > /tmp/gitconfig
+[safe]
+	directory = /github/workspace
+EOF
+export GIT_CONFIG_GLOBAL=/tmp/gitconfig
+
 # Defaults
 SUCCESS_MSG=${FENCE_SUCCESS:-"✅ Nice work! {total} modified lines within limit {limit}."}
 FAIL_MSG=${FENCE_FAIL:-"❌ Too many changes: {total} modified lines, limit is {limit}."}
