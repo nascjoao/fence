@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-            fetch-depth: 0
-      - name: List branches
-        run: git branch -a
       - name: Run FENCE on PR
         uses: ./
+        with:
+          base_branch: ${{ github.base_ref }}
