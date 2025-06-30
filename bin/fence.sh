@@ -38,6 +38,8 @@ while [ $# -gt 0 ]; do
   esac
 done
 
+git fetch origin "$BASE_BRANCH":"$BASE_BRANCH" || true
+
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 TOTAL=$(git diff "$BASE_BRANCH" --shortstat -- . ':(exclude)*lock*' | awk '{print $4 + $6}')
 [ -z "$TOTAL" ] && TOTAL=0
