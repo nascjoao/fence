@@ -25,10 +25,11 @@ fetch_remote_branch() {
 }
 
 use_remote_mode() {
-  CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || error "Could not determine current branch."
+  BRANCH=${BASE_BRANCH:-main}
+
   has_remote || error "No remote 'origin' found."
-  fetch_remote_branch "$CURRENT_BRANCH" || error "Could not fetch origin/$CURRENT_BRANCH."
-  DIFF_BASE="origin/$CURRENT_BRANCH"
+  fetch_remote_branch "$BRANCH" || error "Could not fetch origin/$BRANCH."
+  DIFF_BASE="origin/$BRANCH"
 }
 
 use_local_mode() {
