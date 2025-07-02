@@ -1,34 +1,43 @@
 # 🚧 FENCE — FENCE Ensures Nothing Crosses Edges
 FENCE is a command-line tool that helps you ensure that your code changes do not exceed a specified line limit when compared to a base branch. It is particularly useful for maintaining code quality and preventing large, unwieldy pull requests.
 
-## Index
-- [▶️ Quick Demonstration](#-quick-demonstration)
-- [📦 Installation](#-installation)
-- [🚀 Usage](#-usage)
-  - [Examples:](#examples)
-  - [Customizing Messages](#customizing-messages)
-- [⚙️ Persisting Configuration](#-persisting-configuration)
-- [🧩 GitHub Action](#-github-action)
-  - [✅ Basic usage](#-basic-usage)
-  - [⚙️ Customizing the action](#-customizing-the-action)
-- [🔄 Uninstalling](#-uninstalling)
-- [📄 License](#-license)
+## Index  
+- [▶️ Quick Demonstration](#-quick-demonstration)  
+- [📦 Installation](#-installation)  
+- [🚀 Usage](#-usage)  
+  - [Examples](#examples)  
+  - [Customizing Messages](#customizing-messages)  
+- [⚙️ Persisting Configuration](#-persisting-configuration)  
+- [🧩 GitHub Action](#-github-action)  
+  - [✅ Basic usage](#-basic-usage)  
+  - [⚙️ Customizing the action](#-customizing-the-action)  
+- [🔄 Uninstalling](#-uninstalling)  
+- [📄 License](#-license)  
 
-## ▶️ Quick Demonstration
-https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d
+## ▶️ Quick Demonstration  
+https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d  
 
-## 📦 Installation
-> macOS e Linux
+## 📦 Installation  
+> macOS and Linux  
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/nascjoao/fence/main/install.sh | sh
 ```
 
-## 🚀 Usage
+## 🚀 Usage  
 
 ```bash
-fence [base-branch] [-l limit] [-s successMessage] [-f failMessage]
+fence [base-branch] [-l limit] [-s successMessage] [-f failMessage] [-r]
 ```
+
+### Important: Default branch  
+If no base branch is specified, `fence` assumes `main` by default.
+
+### Remote mode (`-r | --remote`)  
+When `-r` is provided, `fence` compares your current local branch against its remote counterpart (e.g., `origin/main` or `origin/feature-branch`).  
+
+- Without `-r`: compares changes against the specified or default **local** branch.  
+- With `-r`: compares changes against the remote tracking branch (e.g., `origin/main`, `origin/your-branch`).  
 
 ### Examples:
 
@@ -36,13 +45,14 @@ fence [base-branch] [-l limit] [-s successMessage] [-f failMessage]
 fence                     # Compares with `main` branch within the default limit: 250
 fence develop             # Compares with `develop` branch within the default limit: 250
 fence develop -l 100      # Compares with `develop` branch with a limit of 100 lines
+fence -r                  # Compares current branch against remote origin/main, limit 250
+fence develop -r          # Compares current branch against remote origin/develop, limit 250
 ```
 
 > FYI: FENCE ignores lock files, such as `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
 
 ### Customizing Messages
 
-**
 ```bash
 fence \
   -s "✅ Alright! Just {total} lines, limit is {limit}" \
