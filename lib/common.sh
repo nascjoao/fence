@@ -6,6 +6,7 @@ initialize() {
   LIMIT=${FENCE_LIMIT:-250}
   BASE_BRANCH=""
   REMOTE_MODE=0
+  REMOTE=${FENCE_REMOTE_NAME:-origin}
 }
 
 parse_args() {
@@ -26,6 +27,8 @@ parse_args() {
         FAIL_MSG=$2; shift 2 ;;
       -r|--remote)
         REMOTE_MODE=1; shift ;;
+      -R|--remote-name)
+        REMOTE=$2; shift 2 ;;
       -h|--help)
         print_help; exit 0 ;;
       *)
