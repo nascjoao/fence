@@ -1,6 +1,5 @@
 #!/bin/sh
 
-SCRIPT_DIR=$(dirname "$0")
 LIB_DIR="${FENCE_LIB_PATH:-/usr/local/lib/fence}"
 
 . "$LIB_DIR/common.sh"
