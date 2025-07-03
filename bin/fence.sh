@@ -2,10 +2,10 @@
 
 SCRIPT_DIR=$(dirname "$0")
 
-. "$SCRIPT_DIR/../lib/common.sh"
-. "$SCRIPT_DIR/../lib/help.sh"
-. "$SCRIPT_DIR/../lib/remote.sh"
-. "$SCRIPT_DIR/../lib/local.sh"
+. "$SCRIPT_DIR/.fence/common.sh"
+. "$SCRIPT_DIR/.fence/help.sh"
+. "$SCRIPT_DIR/.fence/remote.sh"
+. "$SCRIPT_DIR/.fence/local.sh"
 
 initialize
 parse_args "$@"
