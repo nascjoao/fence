@@ -5,12 +5,14 @@ print_help() {
 Usage: fence [base-branch] [options]
 
 Options:
-  -l, --limit <number>       Set max allowed modified lines (default: 250)
-  -s, --success <message>    Customize success message (use {total} and {limit})
   -f, --fail <message>       Customize fail message (use {total} and {limit})
+  -h, --help                 Show this help message
+  -l, --limit <number>       Set max allowed modified lines (default: 250)
   -r, --remote               Compare against remote branch (e.g., origin/main)
   -R, --remote-name <name>   Specify remote name (default: 'origin')
-  -h, --help                 Show this help message
+  -s, --success <message>    Customize success message (use {total} and {limit})
+  -S, --skip-update          Skip update check
+  -u, --update               Check for updates
 
 If no base-branch is provided, defaults to 'main'.
 
