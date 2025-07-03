@@ -91,3 +91,26 @@ teardown() {
   assert_success
   assert_output --partial "✅"
 }
+
+@test "uses FENCE_REMOTE_NAME env as remote source" {
+  rm -rf ../fake-upstream.git
+  git init --bare ../fake-upstream.git
+
+  git remote add upstream ../fake-upstream.git
+  git push -u upstream feature/test
+
+  echo "line changed locally" >> file.txt
+  git add file.txt
+  git commit -q -m "local change"
+
+  FENCE_REMOTE_NAME=upstream run bash "$FENCE_SCRIPT" feature/test -r
+
+  assert_success
+  assert_output --partial "✅"
+}
+
+@test "fails if FENCE_REMOTE_NAME does not exist" {
+  FENCE_REMOTE_NAME=ghost run bash "$FENCE_SCRIPT" feature/test -r
+  assert_failure
+  assert_output --partial "No remote 'ghost' found"
+}
