@@ -2,3 +2,5 @@
 *.log
 *.tmp
 build/
+test/bats/
+test/test_helper/
