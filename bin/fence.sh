@@ -7,6 +7,33 @@ LIMIT=${FENCE_LIMIT:-250}
 BASE_BRANCH=""
 REMOTE_MODE=0
 
+print_help() {
+  less <<EOF
+Usage: fence [base-branch] [options]
+
+Options:
+  -l, --limit <number>       Set max allowed modified lines (default: 250)
+  -s, --success <message>    Customize success message (use {total} and {limit})
+  -f, --fail <message>       Customize fail message (use {total} and {limit})
+  -r, --remote               Compare against remote branch (e.g., origin/main)
+  -h, --help                 Show this help message
+
+If no base-branch is provided, defaults to 'main'.
+
+Examples:
+  fence
+  fence develop -l 100
+  fence main -r
+  fence -s "✅ OK: {total} lines" -f "❌ Too much: {total}/{limit}"
+
+Exit codes:
+  0  OK, within limit
+  1  Over limit or failure
+
+Navigate with ↑/↓ or j/k. Press q to quit.
+EOF
+}
+
 format_msg() {
   echo "$1" | sed "s/{total}/$TOTAL/g; s/{limit}/$LIMIT/g"
 }
@@ -72,6 +99,8 @@ while [ $# -gt 0 ]; do
       FAIL_MSG=$2; shift 2 ;;
     -r|--remote)
       REMOTE_MODE=1; shift ;;
+    -h|--help)
+      print_help; exit 0 ;;
     *)
       echo "Unknown option: $1" >&2; exit 1 ;;
   esac
