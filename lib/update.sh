@@ -23,11 +23,7 @@ read_cmd() {
 }
 
 read_current_version() {
-  if [ "$USE_MOCKS" = "1" ]; then
-    CURRENT_VERSION=$(cat "$FENCE_TEST_DIR/VERSION")
-  else
-    CURRENT_VERSION=$(cat "$SCRIPT_DIR/../VERSION")
-  fi
+  CURRENT_VERSION=$(cat "${FENCE_VERSION_FILE:-/usr/local/lib/fence/VERSION}")
 }
 
 run_update() {

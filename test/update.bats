@@ -10,8 +10,8 @@ setup() {
   export FENCE_LIB_PATH=$(realpath "$(dirname "$BATS_TEST_FILENAME")/../lib")
   export FENCE_SKIP_UPDATE=0
   TMP_REPO=$(mktemp -d)
-  export FENCE_TEST_DIR="$TMP_REPO"
   HOME="$TMP_REPO"
+  export FENCE_VERSION_FILE="$TMP_REPO/VERSION"
   cd "$TMP_REPO" || exit
   mkdir -p bin lib
   cp "$FENCE_SCRIPT" bin/fence.sh
