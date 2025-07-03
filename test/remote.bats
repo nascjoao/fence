@@ -59,3 +59,59 @@ teardown() {
   assert_success
   assert_output --partial "✅ Nice work! 1 modified lines within limit 250."
 }
+
+@test "uses specified remote name with --remote-name" {
+  rm -rf ../remote-upstream.git
+  git init --bare ../remote-upstream.git
+  git remote add upstream ../remote-upstream.git
+
+  git checkout -b feature/test
+  echo "initial" > file.txt
+  git add file.txt
+  git commit -q -m "initial commit"
+  git push -u upstream feature/test
+
+  echo "new change" >> file.txt
+  git add file.txt
+  git commit -q -m "change with upstream"
+
+  run bash "$FENCE_SCRIPT" feature/test -r --remote-name upstream
+  assert_success
+  assert_output --partial "✅"
+}
+
+@test "uses specified remote name with -R shorthand" {
+  rm -rf ../remote-upstream.git
+  git init --bare ../remote-upstream.git
+  git remote add upstream ../remote-upstream.git
+
+  git checkout -b feature/test
+  echo "initial" > file.txt
+  git add file.txt
+  git commit -q -m "initial commit"
+  git push -u upstream feature/test
+
+  echo "new change 2" >> file.txt
+  git add file.txt
+  git commit -q -m "change with shorthand"
+
+  run bash "$FENCE_SCRIPT" feature/test -r -R upstream
+  assert_success
+  assert_output --partial "✅"
+}
+
+@test "fails if specified remote name does not exist" {
+  run bash "$FENCE_SCRIPT" feature/test -r --remote-name ghost
+  assert_failure
+  assert_output --partial "No remote 'ghost' found"
+}
+
+@test "fails if branch does not exist on specified remote" {
+  rm -rf ../remote-upstream.git
+  git init --bare ../remote-upstream.git
+  git remote add upstream ../remote-upstream.git
+
+  run bash "$FENCE_SCRIPT" feature/test -r -R upstream
+  assert_failure
+  assert_output --partial "Could not fetch upstream/feature/test"
+}
