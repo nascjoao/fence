@@ -1,14 +1,18 @@
 #!/bin/sh
 
 SCRIPT_DIR=$(dirname "$0")
+LIB_DIR="${FENCE_LIB_PATH:-/usr/local/lib/fence}"
 
-. "$SCRIPT_DIR/../lib/common.sh"
-. "$SCRIPT_DIR/../lib/help.sh"
-. "$SCRIPT_DIR/../lib/remote.sh"
-. "$SCRIPT_DIR/../lib/local.sh"
+. "$LIB_DIR/common.sh"
+. "$LIB_DIR/help.sh"
+. "$LIB_DIR/remote.sh"
+. "$LIB_DIR/local.sh"
+. "$LIB_DIR/update.sh"
 
 initialize
 parse_args "$@"
+
+check_for_update
 
 if [ "$REMOTE_MODE" -eq 1 ]; then
   use_remote_mode
