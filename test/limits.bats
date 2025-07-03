@@ -6,6 +6,7 @@ load '../test/test_helper/bats-assert/load'
 FENCE_SCRIPT=$(realpath "$(dirname "$BATS_TEST_FILENAME")/../bin/fence.sh")
 
 setup() {
+  export FENCE_LIB_PATH=$(realpath "$(dirname "$BATS_TEST_FILENAME")/../lib")
   TMP_REPO=$(mktemp -d)
   cd "$TMP_REPO" || exit
   git init -q
