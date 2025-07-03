@@ -27,7 +27,7 @@ release:
 	@sh release.sh
 
 dev:
-	@FENCE_LIB_PATH=./lib bash ./bin/fence.sh $(filter-out $@,$(MAKECMDGOALS))
+	@FENCE_LIB_PATH=./lib FENCE_VERSION_FILE=./VERSION bash ./bin/fence.sh $(filter-out $@,$(MAKECMDGOALS))
 
 %:
 	@:
