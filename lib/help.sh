@@ -9,6 +9,7 @@ Options:
   -s, --success <message>    Customize success message (use {total} and {limit})
   -f, --fail <message>       Customize fail message (use {total} and {limit})
   -r, --remote               Compare against remote branch (e.g., origin/main)
+  -R, --remote-name <name>   Specify remote name (default: 'origin')
   -h, --help                 Show this help message
 
 If no base-branch is provided, defaults to 'main'.
