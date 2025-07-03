@@ -61,21 +61,23 @@ fence \
 
 ## ⚙️ Persisting Configuration
 
-You can set preferred settings for limit, success, and failure messages with environment variables:
+You can set preferred settings for success and failure messages, line limit, and default branch by exporting environment variables in your shell.
 
 ```bash
-export FENCE_LIMIT=300
 export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"
 export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"
+export FENCE_LIMIT=300
+export FENCE_DEFAULT_BRANCH="develop"
 ```
 
 To keep these settings persistent across sessions, add them to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
 
 For example, if you're using `zsh`, you can add the following lines to your `~/.zshrc`:
 ```bash
-echo 'export FENCE_LIMIT=300' >> ~/.zshrc
 echo 'export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"' >> ~/.zshrc
 echo 'export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"' >> ~/.zshrc
+echo 'export FENCE_LIMIT=300' >> ~/.zshrc
+echo 'export FENCE_DEFAULT_BRANCH="develop"' >> ~/.zshrc
 ```
 
 > These variables will be used by default when running `fence` without command-line arguments

@@ -13,7 +13,7 @@ parse_args() {
     BASE_BRANCH=$1
     shift
   else
-    BASE_BRANCH="main"
+    BASE_BRANCH=${FENCE_DEFAULT_BRANCH:-main}
   fi
 
   while [ $# -gt 0 ]; do
