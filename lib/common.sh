@@ -7,6 +7,12 @@ initialize() {
   BASE_BRANCH=""
   REMOTE_MODE=0
   REMOTE=${FENCE_REMOTE_NAME:-origin}
+  if [ -n "$BATS_TEST_RUNNER" ] || [ -n "$BATS_TEST_FILENAME" ]; then
+    SKIP_UPDATE=${FENCE_SKIP_UPDATE:-1}
+  else
+    SKIP_UPDATE=${FENCE_SKIP_UPDATE:-0}
+  fi
+  CHECK_UPDATE=0
 }
 
 parse_args() {
@@ -29,6 +35,10 @@ parse_args() {
         REMOTE_MODE=1; shift ;;
       -R|--remote-name)
         REMOTE=$2; shift 2 ;;
+      -S|--skip-update)
+        SKIP_UPDATE=1; shift ;;
+      -u|--update)
+        CHECK_UPDATE=1; shift ;;
       -h|--help)
         print_help; exit 0 ;;
       *)
