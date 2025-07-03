@@ -28,6 +28,7 @@ if [ "$(id -u)" -ne 0 ]; then
   
   echo "📂 Copying executable to $INSTALL_PATH"
   sudo cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH"
+  sudo cp "$TMP_DIR/fence/VERSION" "$(dirname "$INSTALL_PATH")/VERSION"
   sudo chmod +x "$INSTALL_PATH"
 else
   echo "📁 Copying libraries to $LIB_PATH"
@@ -36,6 +37,7 @@ else
   
   echo "📂 Copying executable to $INSTALL_PATH"
   cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH"
+  cp "$TMP_DIR/fence/VERSION" "$(dirname "$INSTALL_PATH")/VERSION"
   chmod +x "$INSTALL_PATH"
 fi
 
