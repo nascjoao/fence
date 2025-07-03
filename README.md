@@ -27,7 +27,7 @@ curl -sSL https://raw.githubusercontent.com/nascjoao/fence/main/install.sh | sh
 ## 🚀 Usage  
 
 ```bash
-fence [base-branch] [-l limit] [-s successMessage] [-f failMessage] [-r]
+fence [base-branch] [-l limit] [-s successMessage] [-f failMessage] [-r remoteMode] [-R remoteName] [--help]
 ```
 
 ### Important: Default branch  
@@ -38,6 +38,14 @@ When `-r` is provided, `fence` compares your current local branch against its re
 
 - Without `-r`: compares changes against the specified or default **local** branch.  
 - With `-r`: compares changes against the remote tracking branch (e.g., `origin/main`, `origin/your-branch`).  
+
+If you use another remote name, you can specify it with `-R` or `--remote-name` option. For example, if your remote is named `upstream`, you can run:
+
+```bash
+fence -r -R upstream
+```
+
+This also can be set as an environment variable `FENCE_REMOTE_NAME` to avoid specifying it every time you run `fence`.
 
 ### Examples:
 
@@ -61,21 +69,25 @@ fence \
 
 ## ⚙️ Persisting Configuration
 
-You can set preferred settings for limit, success, and failure messages with environment variables:
+You can set preferred settings for success and failure messages, line limit, default branch, and remote name by exporting environment variables in your shell.
 
 ```bash
-export FENCE_LIMIT=300
 export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"
 export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"
+export FENCE_LIMIT=300
+export FENCE_DEFAULT_BRANCH="develop"
+export FENCE_REMOTE_NAME="upstream"
 ```
 
 To keep these settings persistent across sessions, add them to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
 
 For example, if you're using `zsh`, you can add the following lines to your `~/.zshrc`:
 ```bash
-echo 'export FENCE_LIMIT=300' >> ~/.zshrc
 echo 'export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"' >> ~/.zshrc
 echo 'export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"' >> ~/.zshrc
+echo 'export FENCE_LIMIT=300' >> ~/.zshrc
+echo 'export FENCE_DEFAULT_BRANCH="develop"' >> ~/.zshrc
+echo 'export FENCE_REMOTE_NAME="upstream"' >> ~/.zshrc
 ```
 
 > These variables will be used by default when running `fence` without command-line arguments
