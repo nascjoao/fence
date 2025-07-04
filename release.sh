@@ -72,6 +72,6 @@ git tag -a "v$VERSION" -m "Release v$VERSION"
 git push origin "v$VERSION"
 
 echo "🏷 Creating GitHub release..."
-gh release create "v$VERSION" "$TARBALL" --title "v$VERSION" --notes "Release v$VERSION"
+gh release create "v$VERSION" "$TARBALL" --title "v$VERSION"
 
 echo "✅ Release v$VERSION created successfully!"
