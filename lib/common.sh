@@ -13,6 +13,7 @@ initialize() {
     SKIP_UPDATE=${FENCE_SKIP_UPDATE:-0}
   fi
   CHECK_UPDATE=0
+  CURRENT_VERSION=$(cat "${FENCE_VERSION_FILE:-$LIB_DIR/VERSION}")
 }
 
 parse_args() {
@@ -25,22 +26,28 @@ parse_args() {
 
   while [ $# -gt 0 ]; do
     case "$1" in
-      -l|--limit)
-        LIMIT=$2; shift 2 ;;
-      -s|--success)
-        SUCCESS_MSG=$2; shift 2 ;;
+      -b|--bug-report)
+        open_github_issue "bug"; exit 0 ;;
       -f|--fail)
         FAIL_MSG=$2; shift 2 ;;
-      -r|--remote)
-        REMOTE_MODE=1; shift ;;
-      -R|--remote-name)
-        REMOTE=$2; shift 2 ;;
-      -S|--skip-update)
-        SKIP_UPDATE=1; shift ;;
-      -u|--update)
-        CHECK_UPDATE=1; shift ;;
+      -g|--suggest)
+        open_github_issue "suggest"; exit 0 ;;
       -h|--help)
         print_help; exit 0 ;;
+      -k|--skip-update)
+        SKIP_UPDATE=1; shift ;;
+      -l|--limit)
+        LIMIT=$2; shift 2 ;;
+      -n|--remote-name)
+        REMOTE=$2; shift 2 ;;
+      -r|--remote)
+        REMOTE_MODE=1; shift ;;
+      -s|--success)
+        SUCCESS_MSG=$2; shift 2 ;;
+      -u|--update)
+        CHECK_UPDATE=1; shift ;;
+      -v|--version)
+        echo $CURRENT_VERSION; exit 0 ;;
       *)
         echo "Unknown option: $1" >&2
         exit 1 ;;
