@@ -7,6 +7,7 @@ LIB_DIR="${FENCE_LIB_PATH:-/usr/local/lib/fence}"
 . "$LIB_DIR/remote.sh"
 . "$LIB_DIR/local.sh"
 . "$LIB_DIR/update.sh"
+. "$LIB_DIR/new_issue.sh"
 
 initialize
 parse_args "$@"
