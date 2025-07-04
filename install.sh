@@ -3,7 +3,7 @@ set -e
 
 echo "🔧 Installing 🚧 FENCE..."
 
-INSTALL_PATH="/usr/local/bin/fence"
+INSTALL_PATH="/usr/local/bin"
 LIB_PATH="/usr/local/lib/fence"
 TMP_DIR=$(mktemp -d)
 REPO="nascjoao/fence"
@@ -28,7 +28,7 @@ if [ "$(id -u)" -ne 0 ]; then
   
   echo "📂 Copying executable to $INSTALL_PATH"
   sudo cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH"
-  sudo cp "$TMP_DIR/fence/VERSION" "$(dirname "$INSTALL_PATH")/VERSION"
+  sudo cp "$TMP_DIR/fence/VERSION" "$LIB_PATH/VERSION"
   sudo chmod +x "$INSTALL_PATH"
 else
   echo "📁 Copying libraries to $LIB_PATH"
@@ -37,7 +37,7 @@ else
   
   echo "📂 Copying executable to $INSTALL_PATH"
   cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH"
-  cp "$TMP_DIR/fence/VERSION" "$(dirname "$INSTALL_PATH")/VERSION"
+  cp "$TMP_DIR/fence/VERSION" "$LIB_PATH/VERSION"
   chmod +x "$INSTALL_PATH"
 fi
 
