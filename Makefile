@@ -9,7 +9,7 @@ build:
 	rm -rf build
 	mkdir -p $(BUILD_DIR)
 	cp -r bin lib VERSION $(BUILD_DIR)
-	tar -czf $(TAR_FILE) -C build fence
+	@COPYFILE_DISABLE=1 tar -czf $(TAR_FILE) -C build fence
 	rm -rf $(BUILD_DIR)
 	@echo "✅ File created: $(TAR_FILE)"
 
