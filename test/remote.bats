@@ -81,7 +81,7 @@ teardown() {
   assert_output --partial "✅"
 }
 
-@test "uses specified remote name with -R shorthand" {
+@test "uses specified remote name with -n shorthand" {
   rm -rf ../remote-upstream.git
   git init --bare ../remote-upstream.git
   git remote add upstream ../remote-upstream.git
@@ -96,7 +96,7 @@ teardown() {
   git add file.txt
   git commit -q -m "change with shorthand"
 
-  run bash "$FENCE_SCRIPT" feature/test -r -R upstream
+  run bash "$FENCE_SCRIPT" feature/test -r -n upstream
   assert_success
   assert_output --partial "✅"
 }
@@ -112,7 +112,7 @@ teardown() {
   git init --bare ../remote-upstream.git
   git remote add upstream ../remote-upstream.git
 
-  run bash "$FENCE_SCRIPT" feature/test -r -R upstream
+  run bash "$FENCE_SCRIPT" feature/test -r -n upstream
   assert_failure
   assert_output --partial "Could not fetch upstream/feature/test"
 }
