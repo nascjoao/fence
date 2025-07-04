@@ -22,10 +22,6 @@ read_cmd() {
   fi
 }
 
-read_current_version() {
-  CURRENT_VERSION=$(cat "${FENCE_VERSION_FILE:-/usr/local/lib/fence/VERSION}")
-}
-
 run_update() {
   if [ "$USE_MOCKS" = "1" ]; then
     ./mock_install.sh
@@ -69,7 +65,6 @@ check_for_update() {
     return 0
   fi
 
-  read_current_version
   LATEST_VERSION=$(curl_cmd)
 
   record_update_check
