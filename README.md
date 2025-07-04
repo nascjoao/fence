@@ -1,4 +1,5 @@
 # 🚧 FENCE — FENCE Ensures Nothing Crosses Edges
+
 FENCE is a command-line tool that helps you ensure that your code changes do not exceed a specified line limit when compared to a base branch. It is particularly useful for maintaining code quality and preventing large, unwieldy pull requests.
 
 ## Index  
@@ -7,6 +8,7 @@ FENCE is a command-line tool that helps you ensure that your code changes do not
 - [🚀 Usage](#-usage)  
   - [Examples](#examples)  
   - [Customizing Messages](#customizing-messages)  
+  - [Reporting Issues](#reporting-issues)  
 - [⚙️ Persisting Configuration](#-persisting-configuration)  
 - [🧩 GitHub Action](#-github-action)  
   - [✅ Basic usage](#-basic-usage)  
@@ -27,8 +29,22 @@ curl -sSL https://raw.githubusercontent.com/nascjoao/fence/main/install.sh | sh
 ## 🚀 Usage  
 
 ```bash
-fence [base-branch] [-l limit] [-s successMessage] [-f failMessage] [-r remoteMode] [-R remoteName] [--help]
+fence [base-branch] [options]
 ```
+
+### Options:
+
+- `-l`, `--limit <number>`    Set max allowed modified lines (default: 250)  
+- `-s`, `--success <message>`  Custom success message (use `{total}` and `{limit}`)  
+- `-f`, `--fail <message>`    Custom fail message (use `{total}` and `{limit}`)  
+- `-r`, `--remote`        Compare against remote tracking branch (e.g., `origin/main`)  
+- `-n`, `--remote-name <name>` Set remote name (default: `origin`)  
+- `-k`, `--skip-update`      Skip update check  
+- `-u`, `--update`         Check for updates  
+- `-v`, `--version`        Show version  
+- `-h`, `--help`          Show help screen  
+- `-b`, `--bug-report`     Open GitHub issue pre-filled for reporting a bug  
+- `-g`, `--suggest`       Open GitHub issue pre-filled for feature suggestion  
 
 ### Important: Default branch  
 If no base branch is specified, `fence` assumes `main` by default.
@@ -37,39 +53,52 @@ If no base branch is specified, `fence` assumes `main` by default.
 When `-r` is provided, `fence` compares your current local branch against its remote counterpart (e.g., `origin/main` or `origin/feature-branch`).  
 
 - Without `-r`: compares changes against the specified or default **local** branch.  
-- With `-r`: compares changes against the remote tracking branch (e.g., `origin/main`, `origin/your-branch`).  
+- With `-r`: compares changes against the remote tracking branch.  
 
-If you use another remote name, you can specify it with `-R` or `--remote-name` option. For example, if your remote is named `upstream`, you can run:
-
-```bash
-fence -r -R upstream
-```
-
-This also can be set as an environment variable `FENCE_REMOTE_NAME` to avoid specifying it every time you run `fence`.
-
-### Examples:
+You can set the remote name with `-n` or `--remote-name` (default is `origin`):
 
 ```bash
-fence                     # Compares with `main` branch within the default limit: 250
-fence develop             # Compares with `develop` branch within the default limit: 250
-fence develop -l 100      # Compares with `develop` branch with a limit of 100 lines
-fence -r                  # Compares current branch against remote origin/main, limit 250
-fence develop -r          # Compares current branch against remote origin/develop, limit 250
+fence -r -n upstream
 ```
 
-> FYI: FENCE ignores lock files, such as `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
+Or set it via the environment variable:
+
+```bash
+export FENCE_REMOTE_NAME=upstream
+```
+
+### Examples
+
+```bash
+fence                          # Compares with `main` branch within the default limit: 250
+fence develop                  # Compares with `develop` branch within the default limit
+fence develop -l 100           # Sets custom limit
+fence -r                       # Compares against origin/main
+fence develop -r              # Compares against origin/develop
+fence -b                       # Opens GitHub issue to report a bug
+fence -g                       # Opens GitHub issue to suggest an idea
+```
+
+> FENCE ignores lock files like `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
 
 ### Customizing Messages
 
 ```bash
 fence \
-  -s "✅ Alright! Just {total} lines, limit is {limit}" \
-  -f "❌ Oh no! {total} lines, limit is {limit}"
+  -s "✅ All good: {total} lines changed, within {limit}" \
+  -f "❌ Too many changes: {total} lines, max allowed is {limit}"
 ```
+
+### Reporting Issues
+
+FENCE makes it easy to contribute feedback:
+
+- Run `fence -b` to open a **bug report** template with system info prefilled.
+- Run `fence -g` to open a **suggestion** template to propose improvements.
 
 ## ⚙️ Persisting Configuration
 
-You can set preferred settings for success and failure messages, line limit, default branch, and remote name by exporting environment variables in your shell.
+Set environment variables to define defaults:
 
 ```bash
 export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"
@@ -79,26 +108,19 @@ export FENCE_DEFAULT_BRANCH="develop"
 export FENCE_REMOTE_NAME="upstream"
 ```
 
-To keep these settings persistent across sessions, add them to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`):
+To persist these across terminal sessions, add them to your shell config (e.g., `~/.bashrc`, `~/.zshrc`):
 
-For example, if you're using `zsh`, you can add the following lines to your `~/.zshrc`:
 ```bash
-echo 'export FENCE_SUCCESS="✅ Inside limit! {total} lines, limit is {limit}"' >> ~/.zshrc
-echo 'export FENCE_FAIL="❌ Over the limit! {total} lines, limit is {limit}"' >> ~/.zshrc
 echo 'export FENCE_LIMIT=300' >> ~/.zshrc
-echo 'export FENCE_DEFAULT_BRANCH="develop"' >> ~/.zshrc
-echo 'export FENCE_REMOTE_NAME="upstream"' >> ~/.zshrc
 ```
-
-> These variables will be used by default when running `fence` without command-line arguments
 
 ## 🧩 GitHub Action
 
-You can also use FENCE with GitHub Actions to automatically check pull requests in your repository.
+You can use FENCE to block large PRs in GitHub Actions.
 
 ### ✅ Basic usage
 
-Add the following workflow to `.github/workflows/fence.yml` in your repository:
+`.github/workflows/fence.yml`:
 
 ```yaml
 name: FENCE
@@ -117,8 +139,6 @@ jobs:
 ```
 
 ### ⚙️ Customizing the action
-
-You can customize the action by specifying the base branch, limit, and custom messages:
 
 ```yaml
       - name: Run FENCE with custom messages
