@@ -9,6 +9,7 @@ Options:
   -f, --fail <message>       Customize fail message (use {total} and {limit})
   -g, --suggest              Open GitHub issue template for suggestions
   -h, --help                 Show this help message
+  -i, --ignore <patterns>    Exclude files or folders from diff (space-separated)
   -k, --skip-update          Skip update check
   -l, --limit <number>       Set max allowed modified lines (default: 250)
   -n, --remote-name <name>   Specify remote name (default: 'origin')
@@ -24,6 +25,7 @@ Examples:
   fence develop -l 100
   fence main -r
   fence -s "✅ OK: {total} lines" -f "❌ Too much: {total}/{limit}"
+  fence -i node_modules dist/ *.lock
   fence -b
   fence -g
 
