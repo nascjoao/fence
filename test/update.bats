@@ -55,7 +55,7 @@ teardown() {
 
   run bash "$FENCE_SCRIPT" --update
 
-  assert_failure
+  assert_success
   assert_output --partial "FENCE is up to date (version 0.6.0)"
 }
 
@@ -78,7 +78,7 @@ teardown() {
 
   run bash "$FENCE_SCRIPT" --update
 
-  assert_failure
+  assert_success
   assert_output --partial "A new version of FENCE is available"
   assert_output --partial "✅ Updated to version 0.6.0"
 }

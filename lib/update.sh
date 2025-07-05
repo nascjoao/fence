@@ -71,6 +71,8 @@ check_for_update() {
 
   if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
     echo "🚀 A new version of FENCE is available ($LATEST_VERSION)!"
+    echo "   You are currently using version $CURRENT_VERSION."
+    echo " "
     printf "👉 Would you like to update? [y/N] "
     read_cmd
     if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
@@ -78,9 +80,13 @@ check_for_update() {
       run_update
       echo "✅ Updated to version $LATEST_VERSION"
     else
-      echo "ℹ️  You can update later by running the install script again."
+      echo "ℹ️  You can update later by running 'fence --update'."    
     fi
   elif [ "$CHECK_UPDATE" -eq 1 ]; then
     echo "✅ FENCE is up to date (version $CURRENT_VERSION)."
+  fi
+
+  if [ $CHECK_UPDATE -eq 1 ]; then
+    exit 0
   fi
 }
