@@ -14,6 +14,7 @@ initialize() {
   fi
   CHECK_UPDATE=0
   CURRENT_VERSION=$(cat "${FENCE_VERSION_FILE:-$LIB_DIR/VERSION}")
+  IGNORE_PATTERN=':(exclude)*lock*'
 }
 
 parse_args() {
@@ -34,6 +35,13 @@ parse_args() {
         open_github_issue "suggest"; exit 0 ;;
       -h|--help)
         print_help; exit 0 ;;
+      -i|--ignore)
+        shift
+        while [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; do
+          IGNORE_PATTERN="$IGNORE_PATTERN :(exclude)$1"
+          shift
+        done
+        ;;
       -k|--skip-update)
         SKIP_UPDATE=1; shift ;;
       -l|--limit)
@@ -65,7 +73,7 @@ error() {
 }
 
 check_diff() {
-  TOTAL=$(git diff "$DIFF_BASE" --shortstat -- . ':(exclude)*lock*' | awk '{print $4 + $6}')
+  TOTAL=$(git diff "$DIFF_BASE" --shortstat -- . $IGNORE_PATTERN | awk '{print $4 + $6}')
   [ -z "$TOTAL" ] && TOTAL=0
 
   if [ "$TOTAL" -gt "$LIMIT" ]; then
