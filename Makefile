@@ -2,7 +2,7 @@ VERSION = $(shell cat VERSION)
 BUILD_DIR = build/fence
 TAR_FILE = build/fence-$(VERSION).tar.gz
 
-.PHONY: build clean test install release dev
+.PHONY: build clean test install release
 
 build:
 	@echo "📦 Generating distribution package..."
@@ -25,9 +25,3 @@ install:
 
 release:
 	@sh release.sh
-
-dev:
-	@FENCE_LIB_PATH=./lib FENCE_VERSION_FILE=./VERSION bash ./bin/fence.sh $(filter-out $@,$(MAKECMDGOALS))
-
-%:
-	@:
