@@ -26,25 +26,28 @@ https://github.com/user-attachments/assets/7b79aed2-1fd7-42d4-a856-d36f334afe2d
 curl -sSL https://raw.githubusercontent.com/nascjoao/fence/main/install.sh | sh
 ```
 
-## 🚀 Usage  
+## 🚀 Usage
 
-```bash
+```
 fence [base-branch] [options]
 ```
 
-### Options:
+### Options
 
-- `-l`, `--limit <number>`    Set max allowed modified lines (default: 250)  
-- `-s`, `--success <message>`  Custom success message (use `{total}` and `{limit}`)  
-- `-f`, `--fail <message>`    Custom fail message (use `{total}` and `{limit}`)  
-- `-r`, `--remote`        Compare against remote tracking branch (e.g., `origin/main`)  
-- `-n`, `--remote-name <name>` Set remote name (default: `origin`)  
-- `-k`, `--skip-update`      Skip update check  
-- `-u`, `--update`         Check for updates  
-- `-v`, `--version`        Show version  
-- `-h`, `--help`          Show help screen  
-- `-b`, `--bug-report`     Open GitHub issue pre-filled for reporting a bug  
-- `-g`, `--suggest`       Open GitHub issue pre-filled for feature suggestion  
+| Flag                         | Description                                                                 |
+|------------------------------|-----------------------------------------------------------------------------|
+| `-l`, `--limit <number>`     | Set max allowed modified lines (default: 250)                              |
+| `-s`, `--success <message>`  | Custom success message (use `{total}` and `{limit}`)                       |
+| `-f`, `--fail <message>`     | Custom fail message (use `{total}` and `{limit}`)                          |
+| `-r`, `--remote`             | Compare against remote tracking branch (e.g., `origin/main`)               |
+| `-n`, `--remote-name <name>` | Set remote name (default: `origin`)                                        |
+| `-i`, `--ignore <patterns>`  | Exclude files or folders from diff (space-separated, supports globs)       |
+| `-k`, `--skip-update`        | Skip update check                                                          |
+| `-u`, `--update`             | Check for updates                                                          |
+| `-v`, `--version`            | Show version                                                               |
+| `-h`, `--help`               | Show help screen                                                           |
+| `-b`, `--bug-report`         | Open GitHub issue pre-filled for reporting a bug                          |
+| `-g`, `--suggest`            | Open GitHub issue pre-filled for feature suggestion                        |
 
 ### Important: Default branch  
 If no base branch is specified, `fence` assumes `main` by default.
@@ -77,9 +80,10 @@ fence -r                       # Compares against origin/main
 fence develop -r              # Compares against origin/develop
 fence -b                       # Opens GitHub issue to report a bug
 fence -g                       # Opens GitHub issue to suggest an idea
+fence -i node_modules dist/    # Ignores specific paths during diff
 ```
 
-> FENCE ignores lock files like `package-lock.json`, `yarn.lock`, and `pnpm-lock.yaml`.
+> FENCE also ignores common lockfiles by default (e.g., `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`).
 
 ### Customizing Messages
 
