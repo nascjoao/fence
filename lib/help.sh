@@ -6,6 +6,7 @@ Usage: fence [base-branch] [options]
 
 Options:
   -b, --bug-report           Open GitHub issue template for bug reports
+  -c, --install-completion   Install shell autocomplete for FENCE
   -f, --fail <message>       Customize fail message (use {total} and {limit})
   -g, --suggest              Open GitHub issue template for suggestions
   -h, --help                 Show this help message
