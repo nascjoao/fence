@@ -29,6 +29,8 @@ parse_args() {
     case "$1" in
       -b|--bug-report)
         open_github_issue "bug"; exit 0 ;;
+      -c|--install-completion)
+        install_completion; exit 0 ;;
       -f|--fail)
         FAIL_MSG=$2; shift 2 ;;
       -g|--suggest)
