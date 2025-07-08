@@ -29,7 +29,7 @@ if [ "$(id -u)" -ne 0 ]; then
   echo "📂 Copying executable to $INSTALL_PATH"
   sudo cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH/fence"
   sudo cp "$TMP_DIR/fence/VERSION" "$LIB_PATH/VERSION"
-  sudo chmod +x "$INSTALL_PATH"
+  sudo chmod +x "$INSTALL_PATH/fence"
 else
   echo "📁 Copying libraries to $LIB_PATH"
   mkdir -p "$LIB_PATH"
@@ -38,8 +38,10 @@ else
   echo "📂 Copying executable to $INSTALL_PATH"
   cp "$TMP_DIR/fence/bin/fence.sh" "$INSTALL_PATH/fence"
   cp "$TMP_DIR/fence/VERSION" "$LIB_PATH/VERSION"
-  chmod +x "$INSTALL_PATH"
+  chmod +x "$INSTALL_PATH/fence"
 fi
+
+sh "$TMP_DIR/fence/lib/install_completion.sh"
 
 rm -rf "$TMP_DIR"
 
@@ -48,3 +50,4 @@ echo "🚧 FENCE"
 echo "✅ Successfully installed version $VERSION!"
 echo ""
 echo "➡️  You can now run it with the command: fence"
+echo "💡 Tip: Run 'fence -c' to reinstall autocompletion later (e.g., if you switch shells)"
