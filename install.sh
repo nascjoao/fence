@@ -41,7 +41,9 @@ else
   chmod +x "$INSTALL_PATH/fence"
 fi
 
-sh "$TMP_DIR/fence/lib/install_completion.sh"
+. "$TMP_DIR/fence/lib/install_completion.sh"
+
+install_completion
 
 rm -rf "$TMP_DIR"
 
@@ -50,4 +52,3 @@ echo "🚧 FENCE"
 echo "✅ Successfully installed version $VERSION!"
 echo ""
 echo "➡️  You can now run it with the command: fence"
-echo "💡 Tip: Run 'fence -c' to reinstall autocompletion later (e.g., if you switch shells)"
