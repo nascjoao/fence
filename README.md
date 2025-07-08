@@ -34,20 +34,21 @@ fence [base-branch] [options]
 
 ### Options
 
-| Flag                         | Description                                                                 |
-|------------------------------|-----------------------------------------------------------------------------|
-| `-l`, `--limit <number>`     | Set max allowed modified lines (default: 250)                              |
-| `-s`, `--success <message>`  | Custom success message (use `{total}` and `{limit}`)                       |
-| `-f`, `--fail <message>`     | Custom fail message (use `{total}` and `{limit}`)                          |
-| `-r`, `--remote`             | Compare against remote tracking branch (e.g., `origin/main`)               |
-| `-n`, `--remote-name <name>` | Set remote name (default: `origin`)                                        |
-| `-i`, `--ignore <patterns>`  | Exclude files or folders from diff (space-separated, supports globs)       |
-| `-k`, `--skip-update`        | Skip update check                                                          |
-| `-u`, `--update`             | Check for updates                                                          |
-| `-v`, `--version`            | Show version                                                               |
-| `-h`, `--help`               | Show help screen                                                           |
-| `-b`, `--bug-report`         | Open GitHub issue pre-filled for reporting a bug                          |
-| `-g`, `--suggest`            | Open GitHub issue pre-filled for feature suggestion                        |
+| Flag                         | Description                                                                |
+|------------------------------|----------------------------------------------------------------------------|
+| `-b`, `--bug-report`          | Open GitHub issue template for bug reports                                |
+| `-c`, `--install-completion`  | Install shell autocomplete for FENCE                                      |
+| `-f`, `--fail <message>`      | Customize fail message (use `{total}` and `{limit}`)                      |
+| `-g`, `--suggest`             | Open GitHub issue template for suggestions                                |
+| `-h`, `--help`                | Show this help message                                                    |
+| `-i`, `--ignore <patterns>`   | Exclude files or folders from diff (space-separated)                      |
+| `-k`, `--skip-update`         | Skip update check                                                        |
+| `-l`, `--limit <number>`      | Set max allowed modified lines (default: 250)                            |
+| `-n`, `--remote-name <name>`  | Specify remote name (default: 'origin')                                  |
+| `-r`, `--remote`              | Compare against remote branch (e.g., origin/main)                        |
+| `-s`, `--success <message>`   | Customize success message (use `{total}` and `{limit}`)                  |
+| `-u`, `--update`              | Check for updates                                                        |
+| `-v`, `--version`             | Show installed version                                                   |
 
 ### Important: Default branch  
 If no base branch is specified, `fence` assumes `main` by default.
